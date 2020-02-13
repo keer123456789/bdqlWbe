@@ -1,0 +1,85 @@
+2020-02-13 15:53:01.985  INFO 524 --- [main] com.keer.bdql.BdqlApplication            : Starting BdqlApplication on DESKTOP-MCBQJGQ with PID 524 (started by keer in C:\Users\keer\Desktop\交接包\BDQL工具\bdql)
+2020-02-13 15:53:01.987  INFO 524 --- [main] com.keer.bdql.BdqlApplication            : No active profile set, falling back to default profiles: default
+2020-02-13 15:53:02.661  INFO 524 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
+2020-02-13 15:53:02.677  INFO 524 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-02-13 15:53:02.679  INFO 524 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.19]
+2020-02-13 15:53:02.746  INFO 524 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-02-13 15:53:02.746  INFO 524 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 729 ms
+2020-02-13 15:53:02.880  INFO 524 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-02-13 15:53:02.931  INFO 524 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2020-02-13 15:53:02.999  INFO 524 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path ''
+2020-02-13 15:53:03.001  INFO 524 --- [main] com.keer.bdql.BdqlApplication            : Started BdqlApplication in 1.29 seconds (JVM running for 1.923)
+2020-02-13 15:53:28.037  INFO 524 --- [http-nio-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-02-13 15:53:28.037  INFO 524 --- [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-02-13 15:53:28.041  INFO 524 --- [http-nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2020-02-13 15:55:24.821  INFO 524 --- [http-nio-9090-exec-3] c.b.builders.BigchainDbConfigBuilder     : Connected to node - http://192.168.101.13:9984 after 0 retry(s)...
+2020-02-13 15:55:24.825  INFO 524 --- [http-nio-9090-exec-3] c.keer.bdql.Bigchaindb.BigchainDBRunner  : {"api":{"v1":{"assets":"/api/v1/assets/","blocks":"/api/v1/blocks/","docs":"https://docs.bigchaindb.com/projects/server/en/v2.0.0b9/http-client-server-api.html","metadata":"/api/v1/metadata/","outputs":"/api/v1/outputs/","streams":"ws://bigchaindb:9985/api/v1/streams/valid_transactions","transactions":"/api/v1/transactions/","validators":"/api/v1/validators"}},"docs":"https://docs.bigchaindb.com/projects/server/en/v2.0.0b9/","software":"BigchainDB","version":"2.0.0b9"}
+
+2020-02-13 15:55:24.853  INFO 524 --- [http-nio-9090-exec-3] c.keer.bdql.Bigchaindb.BigchainDBRunner  : 2.0.0b9
+2020-02-13 15:55:24.854  INFO 524 --- [http-nio-9090-exec-3] c.keer.bdql.Bigchaindb.BigchainDBRunner  : 与节点：http://192.168.101.13:9984,连接成功
+2020-02-13 16:01:59.148  INFO 524 --- [http-nio-9090-exec-7] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：insert into person (name,age,home)values("keer","11","wuhan"),转换后：INSERT INTO PERSON (NAME,AGE,HOME)VALUES("KEER","11","WUHAN")
+2020-02-13 16:01:59.148  INFO 524 --- [http-nio-9090-exec-7] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：insert into person (name,age,home)values("keer","11","wuhan")，##########################
+2020-02-13 16:01:59.162  INFO 524 --- [http-nio-9090-exec-7] com.keer.bdql.Bigchaindb.KeyPairHolder   : 获得./keypair.txt中的公钥
+2020-02-13 16:01:59.162  INFO 524 --- [http-nio-9090-exec-7] com.keer.bdql.Bigchaindb.KeyPairHolder   : 成功获得./keypair.txt路径下的密钥
+2020-02-13 16:01:59.162  INFO 524 --- [http-nio-9090-exec-7] com.keer.bdql.Bigchaindb.KeyPairHolder   : 获得./keypair.txt中的私钥
+2020-02-13 16:01:59.162  INFO 524 --- [http-nio-9090-exec-7] com.keer.bdql.Bigchaindb.KeyPairHolder   : 成功获得./keypair.txt路径下的密钥
+2020-02-13 16:01:59.211  INFO 524 --- [http-nio-9090-exec-7] com.keer.bdql.BDQLParser.BDQLParser      : 插入操作成功！！！！！
+2020-02-13 16:04:20.896  INFO 524 --- [http-nio-9090-exec-10] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：UPDATE school SET column1="beijingwuzixuyuan",column2="jisuanji" WHERE ID=0xc6d4e02a75982bfe42baa70948e43f15b42f00707320aa48433efb7d89afe801,转换后：UPDATE SCHOOL SET COLUMN1="BEIJINGWUZIXUYUAN",COLUMN2="JISUANJI" WHERE ID=0XC6D4E02A75982BFE42BAA70948E43F15B42F00707320AA48433EFB7D89AFE801
+2020-02-13 16:04:20.897  INFO 524 --- [http-nio-9090-exec-10] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：UPDATE school SET column1="beijingwuzixuyuan",column2="jisuanji" WHERE ID=0xc6d4e02a75982bfe42baa70948e43f15b42f00707320aa48433efb7d89afe801，##########################
+2020-02-13 16:04:20.905 ERROR 524 --- [http-nio-9090-exec-10] com.keer.bdql.Bigchaindb.BigchainDBUtil  : 资产ID：xc6d4e02a75982bfe42baa70948e43f15b42f00707320aa48433efb7d89afe80,不存在!!!!!!!
+2020-02-13 16:04:20.905  INFO 524 --- [http-nio-9090-exec-10] com.keer.bdql.BDQLParser.BDQLParser      : 更新数据成功！！！！
+2020-02-13 16:04:20.905  INFO 524 --- [http-nio-9090-exec-10] com.keer.bdql.BDQLParser.BDQLParser      : 交易ID：null
+2020-02-13 16:05:16.135  INFO 524 --- [http-nio-9090-exec-5] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：UPDATE school SET column1="beijingwuzixuyuan",column2="jisuanji" WHERE ID=c6d4e02a75982bfe42baa70948e43f15b42f00707320aa48433efb7d89afe801,转换后：UPDATE SCHOOL SET COLUMN1="BEIJINGWUZIXUYUAN",COLUMN2="JISUANJI" WHERE ID=C6D4E02A75982BFE42BAA70948E43F15B42F00707320AA48433EFB7D89AFE801
+2020-02-13 16:05:16.135  INFO 524 --- [http-nio-9090-exec-5] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：UPDATE school SET column1="beijingwuzixuyuan",column2="jisuanji" WHERE ID=c6d4e02a75982bfe42baa70948e43f15b42f00707320aa48433efb7d89afe801，##########################
+2020-02-13 16:05:16.140 ERROR 524 --- [http-nio-9090-exec-5] com.keer.bdql.Bigchaindb.BigchainDBUtil  : 资产ID：6d4e02a75982bfe42baa70948e43f15b42f00707320aa48433efb7d89afe80,不存在!!!!!!!
+2020-02-13 16:05:16.141  INFO 524 --- [http-nio-9090-exec-5] com.keer.bdql.BDQLParser.BDQLParser      : 更新数据成功！！！！
+2020-02-13 16:05:16.141  INFO 524 --- [http-nio-9090-exec-5] com.keer.bdql.BDQLParser.BDQLParser      : 交易ID：null
+2020-02-13 16:05:54.747  INFO 524 --- [http-nio-9090-exec-2] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：UPDATE school SET column1="beijingwuzixuyuan",column2="jisuanji" WHERE ID= "0xc6d4e02a75982bfe42baa70948e43f15b42f00707320aa48433efb7d89afe801",转换后：UPDATE SCHOOL SET COLUMN1="BEIJINGWUZIXUYUAN",COLUMN2="JISUANJI" WHERE ID= "0XC6D4E02A75982BFE42BAA70948E43F15B42F00707320AA48433EFB7D89AFE801"
+2020-02-13 16:05:54.747  INFO 524 --- [http-nio-9090-exec-2] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：UPDATE school SET column1="beijingwuzixuyuan",column2="jisuanji" WHERE ID= "0xc6d4e02a75982bfe42baa70948e43f15b42f00707320aa48433efb7d89afe801"，##########################
+2020-02-13 16:05:54.751 ERROR 524 --- [http-nio-9090-exec-2] com.keer.bdql.Bigchaindb.BigchainDBUtil  : 资产ID：0xc6d4e02a75982bfe42baa70948e43f15b42f00707320aa48433efb7d89afe801,不存在!!!!!!!
+2020-02-13 16:05:54.751  INFO 524 --- [http-nio-9090-exec-2] com.keer.bdql.BDQLParser.BDQLParser      : 更新数据成功！！！！
+2020-02-13 16:05:54.751  INFO 524 --- [http-nio-9090-exec-2] com.keer.bdql.BDQLParser.BDQLParser      : 交易ID：null
+2020-02-13 16:07:29.278  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：UPDATE school SET column1="beijingwuzixuyuan",column2="jisuanji" WHERE ID= "c6d4e02a75982bfe42baa70948e43f15b42f00707320aa48433efb7d89afe801",转换后：UPDATE SCHOOL SET COLUMN1="BEIJINGWUZIXUYUAN",COLUMN2="JISUANJI" WHERE ID= "C6D4E02A75982BFE42BAA70948E43F15B42F00707320AA48433EFB7D89AFE801"
+2020-02-13 16:07:29.278  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：UPDATE school SET column1="beijingwuzixuyuan",column2="jisuanji" WHERE ID= "c6d4e02a75982bfe42baa70948e43f15b42f00707320aa48433efb7d89afe801"，##########################
+2020-02-13 16:07:29.287  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.Bigchaindb.KeyPairHolder   : 获得./keypair.txt中的公钥
+2020-02-13 16:07:29.287  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.Bigchaindb.KeyPairHolder   : 成功获得./keypair.txt路径下的密钥
+2020-02-13 16:07:29.288  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.Bigchaindb.KeyPairHolder   : 获得./keypair.txt中的公钥
+2020-02-13 16:07:29.288  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.Bigchaindb.KeyPairHolder   : 成功获得./keypair.txt路径下的密钥
+2020-02-13 16:07:29.289  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.Bigchaindb.KeyPairHolder   : 获得./keypair.txt中的公钥
+2020-02-13 16:07:29.289  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.Bigchaindb.KeyPairHolder   : 成功获得./keypair.txt路径下的密钥
+2020-02-13 16:07:29.290  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.Bigchaindb.KeyPairHolder   : 获得./keypair.txt中的私钥
+2020-02-13 16:07:29.290  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.Bigchaindb.KeyPairHolder   : 成功获得./keypair.txt路径下的密钥
+2020-02-13 16:07:29.306  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.BDQLParser.BDQLParser      : 更新数据成功！！！！
+2020-02-13 16:07:29.306  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.BDQLParser.BDQLParser      : 交易ID：cfb0626053fd801a822e4d0c4add56eee32c85e3331954a577a9eb321d1a9069
+2020-02-13 16:16:38.101  INFO 524 --- [http-nio-9090-exec-7] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：select * from person,转换后：SELECT * FROM PERSON
+2020-02-13 16:16:38.101  INFO 524 --- [http-nio-9090-exec-7] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：select * from person，##########################
+2020-02-13 16:17:13.744  INFO 524 --- [http-nio-9090-exec-4] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：select name="keer" from person,转换后：SELECT NAME="KEER" FROM PERSON
+2020-02-13 16:17:13.745  INFO 524 --- [http-nio-9090-exec-4] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：select name="keer" from person，##########################
+2020-02-13 16:17:13.746 ERROR 524 --- [http-nio-9090-exec-4] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因，正在查找……………………
+2020-02-13 16:17:13.746 ERROR 524 --- [http-nio-9090-exec-4] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因： "=" "="    at line 1, column 12.
+2020-02-13 16:18:00.973  INFO 524 --- [http-nio-9090-exec-1] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：select name form person where age="11",转换后：SELECT NAME FORM PERSON WHERE AGE="11"
+2020-02-13 16:18:00.974  INFO 524 --- [http-nio-9090-exec-1] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：select name form person where age="11"，##########################
+2020-02-13 16:18:00.974 ERROR 524 --- [http-nio-9090-exec-1] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因，正在查找……………………
+2020-02-13 16:18:00.974 ERROR 524 --- [http-nio-9090-exec-1] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因： "person" <S_IDENTIFIER>    at line 1, column 18.
+2020-02-13 16:18:05.248  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：此种语法还未推出！！！,转换后：此种语法还未推出！！！
+2020-02-13 16:18:05.249  INFO 524 --- [http-nio-9090-exec-9] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：此种语法还未推出！！！，##########################
+2020-02-13 16:18:05.250 ERROR 524 --- [http-nio-9090-exec-9] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因，正在查找……………………
+2020-02-13 16:18:05.250 ERROR 524 --- [http-nio-9090-exec-9] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因： "\u6b64\u79cd\u8bed\u6cd5\u8fd8\u672a\u63a8\u51fa" <S_IDENTIFIER>    at line 1, column 1.
+2020-02-13 16:18:05.541  INFO 524 --- [http-nio-9090-exec-6] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：此种语法还未推出！！！,转换后：此种语法还未推出！！！
+2020-02-13 16:18:05.541  INFO 524 --- [http-nio-9090-exec-6] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：此种语法还未推出！！！，##########################
+2020-02-13 16:18:05.541 ERROR 524 --- [http-nio-9090-exec-6] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因，正在查找……………………
+2020-02-13 16:18:05.542 ERROR 524 --- [http-nio-9090-exec-6] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因： "\u6b64\u79cd\u8bed\u6cd5\u8fd8\u672a\u63a8\u51fa" <S_IDENTIFIER>    at line 1, column 1.
+2020-02-13 16:18:05.732  INFO 524 --- [http-nio-9090-exec-8] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：此种语法还未推出！！！,转换后：此种语法还未推出！！！
+2020-02-13 16:18:05.732  INFO 524 --- [http-nio-9090-exec-8] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：此种语法还未推出！！！，##########################
+2020-02-13 16:18:05.733 ERROR 524 --- [http-nio-9090-exec-8] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因，正在查找……………………
+2020-02-13 16:18:05.733 ERROR 524 --- [http-nio-9090-exec-8] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因： "\u6b64\u79cd\u8bed\u6cd5\u8fd8\u672a\u63a8\u51fa" <S_IDENTIFIER>    at line 1, column 1.
+2020-02-13 16:18:05.901  INFO 524 --- [http-nio-9090-exec-3] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：此种语法还未推出！！！,转换后：此种语法还未推出！！！
+2020-02-13 16:18:05.901  INFO 524 --- [http-nio-9090-exec-3] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：此种语法还未推出！！！，##########################
+2020-02-13 16:18:05.902 ERROR 524 --- [http-nio-9090-exec-3] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因，正在查找……………………
+2020-02-13 16:18:05.902 ERROR 524 --- [http-nio-9090-exec-3] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因： "\u6b64\u79cd\u8bed\u6cd5\u8fd8\u672a\u63a8\u51fa" <S_IDENTIFIER>    at line 1, column 1.
+2020-02-13 16:18:06.118  INFO 524 --- [http-nio-9090-exec-10] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：此种语法还未推出！！！,转换后：此种语法还未推出！！！
+2020-02-13 16:18:06.118  INFO 524 --- [http-nio-9090-exec-10] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：此种语法还未推出！！！，##########################
+2020-02-13 16:18:06.118 ERROR 524 --- [http-nio-9090-exec-10] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因，正在查找……………………
+2020-02-13 16:18:06.118 ERROR 524 --- [http-nio-9090-exec-10] com.keer.bdql.BDQLParser.BDQLParser      : BDQL语法错误原因： "\u6b64\u79cd\u8bed\u6cd5\u8fd8\u672a\u63a8\u51fa" <S_IDENTIFIER>    at line 1, column 1.
+2020-02-13 16:18:30.079  INFO 524 --- [http-nio-9090-exec-5] com.keer.bdql.BDQLParser.BDQLUtil        : 字符串：select * from person where name="keer",转换后：SELECT * FROM PERSON WHERE NAME="KEER"
+2020-02-13 16:18:30.079  INFO 524 --- [http-nio-9090-exec-5] com.keer.bdql.BDQLParser.BDQLParser      : 开始解析BDQL：select * from person where name="keer"，##########################

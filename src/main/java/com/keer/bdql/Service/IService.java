@@ -1,0 +1,20 @@
+package com.keer.bdql.Service;
+
+
+import com.keer.bdql.Domain.ParserResult;
+
+import java.io.IOException;
+
+public interface IService {
+    ParserResult getKey(String key);
+
+    ParserResult startConn(String url);
+
+    ParserResult getCloumnsName(String key);
+
+    ParserResult getTableData(String key, String operation);
+
+    ParserResult runBDQL(String BDQL);
+
+    void Experiment(int i, int j) throws IOException, InterruptedException;
+}
