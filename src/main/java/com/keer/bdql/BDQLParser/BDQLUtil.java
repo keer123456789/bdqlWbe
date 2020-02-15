@@ -158,5 +158,8 @@ public class BDQLUtil {
 //        Map<String,Table>a=new HashMap<String, Table>();
 //        a=getAlltablesByPubKey(KeyPairHolder.pubKeyToString(KeyPairHolder.getPublic()));
 //        logger.info(String.valueOf(a.size()));
+
+        boolean[][] dp = new boolean[2][2];
+        logger.info(dp[0][0]+"");
     }
 }
