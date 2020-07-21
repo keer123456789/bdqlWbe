@@ -46,10 +46,10 @@ INSERT INTO table_name (column1,column2,column3,...)VALUES (value1,value2,value3
 ```
 
 ### 3.4 使用update语句创建资产的metadata。
-**注意**：where后的表达式是固定的。`assetID`是资产ID。
+**注意**：where后的表达式是固定的。`assetID`是资产ID。不用引号和0x
 ```
 UPDATE table_name SET column1=value1,column2=value2,... WHERE ID = assetID;
-UPDATE grade SET math=80,art=70,pe=80  WHERE ID =  ec704799f4dfc50dfc47f125604c040bc912174517667e4dd1dd4ae56c5612a7
+
 ```
 ### 3.5 使用select 语句查询
 **注意**：

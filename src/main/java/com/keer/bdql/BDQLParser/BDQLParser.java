@@ -433,7 +433,7 @@ public class BDQLParser {
         EqualsTo expression = (EqualsTo) update.getWhere();
         String ID = expression.getLeftExpression().toString();
         String values = expression.getRightExpression().toString();
-        values = values.substring(1, values.length() - 1);
+//        values = values.substring(1, values.length() - 1);
 
         if (!ID.equals("ID")) {
             logger.error("BDQL语法错误：where 只能使用ID=————，请检查书写和大小写");

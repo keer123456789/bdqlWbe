@@ -437,11 +437,17 @@ public class BigchainDBUtil {
      * @return last transaction
      * @throws IOException
      */
-    public  String  getLastTransaction(String assetId) throws IOException, InterruptedException {
-//        Transactions transactions = TransactionsApi.getTransactionsByAssetId(assetId, Operations.TRANSFER);
-//        List<Transaction> transfers=transactions.getTransactions();
-        String json= HttpUtil.httpGet(BigChainDBGlobals.getBaseUrl() + BigchainDbApi.TRANSACTIONS + "/?asset_id=" + assetId + "&operation=TRANSFER",50);
-        List<Transaction> transfers=JSON.parseArray(json,Transaction.class);
+    public  String  getLastTransaction(String assetId)  {
+        Transactions transactions = null;
+        try {
+            transactions = TransactionsApi.getTransactionsByAssetId(assetId, Operations.TRANSFER);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return assetId;
+        }
+        List<Transaction> transfers=transactions.getTransactions();
+//        String json= HttpUtil.httpGet(BigChainDBGlobals.getBaseUrl() + BigchainDbApi.TRANSACTIONS + "/?asset_id=" + assetId + "&operation=TRANSFER",50);
+//        List<Transaction> transfers=JSON.parseArray(json,Transaction.class);
 
         if (transfers != null && transfers.size() > 0) {
             return transfers.get(transfers.size() - 1).getId();
