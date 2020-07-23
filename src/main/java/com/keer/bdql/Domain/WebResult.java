@@ -1,13 +1,17 @@
 package com.keer.bdql.Domain;
 
-public class ParserResult<T> {
+/**
+ * controller 返回值
+ * @param <T>
+ */
+public class WebResult<T> {
     public static final int SUCCESS = 0;
     public static final int ERROR = 1;
     private int status;
     private T data;
     private String message;
 
-    public ParserResult() {
+    public WebResult() {
     }
 
     public int getStatus() {

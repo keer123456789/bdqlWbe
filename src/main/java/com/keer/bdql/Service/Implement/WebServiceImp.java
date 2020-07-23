@@ -7,9 +7,9 @@ import com.keer.bdql.Bigchaindb.BigchainDBRunner;
 import com.keer.bdql.Bigchaindb.BigchainDBUtil;
 import com.keer.bdql.Bigchaindb.KeyPairHolder;
 import com.keer.bdql.Domain.MetaData;
-import com.keer.bdql.Domain.ParserResult;
+import com.keer.bdql.Domain.WebResult;
 import com.keer.bdql.Domain.Table;
-import com.keer.bdql.Service.IService;
+import com.keer.bdql.Service.WebService;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class BigchainDBServiceImp implements IService {
-    private static Logger logger = LoggerFactory.getLogger(BigchainDBServiceImp.class);
+public class WebServiceImp implements WebService {
+    private static Logger logger = LoggerFactory.getLogger(WebServiceImp.class);
 
     @Autowired
     KeyPairHolder keyPairHolder;
@@ -47,38 +47,38 @@ public class BigchainDBServiceImp implements IService {
      * @return
      */
     @Override
-    public ParserResult getKey(String key) {
-        ParserResult parserResult = new ParserResult();
+    public WebResult getKey(String key) {
+        WebResult parserResult = new WebResult();
         if (keyPairHolder.SaveKeyPairToTXT(keyPairHolder.getKeyPairFromString(key))) {
-            parserResult.setStatus(ParserResult.SUCCESS);
+            parserResult.setStatus(WebResult.SUCCESS);
             parserResult.setMessage("success");
             logger.info("设置数据密钥成功");
         } else {
             parserResult.setMessage("fail");
-            parserResult.setStatus(ParserResult.ERROR);
+            parserResult.setStatus(WebResult.ERROR);
             logger.error("设置数据密钥失败");
         }
         return parserResult;
     }
 
     @Override
-    public ParserResult startConn(String url) {
-        ParserResult parserResult = new ParserResult();
+    public WebResult startConn(String url) {
+        WebResult parserResult = new WebResult();
         if (bigchainDBRunner.StartConn(url)) {
             parserResult.setMessage("连接BigchainDB节点成功！！！");
-            parserResult.setStatus(ParserResult.SUCCESS);
+            parserResult.setStatus(WebResult.SUCCESS);
             parserResult.setData(true);
         } else {
             parserResult.setMessage("连接BigchainDB节点失败成功！");
-            parserResult.setStatus(ParserResult.ERROR);
+            parserResult.setStatus(WebResult.ERROR);
             parserResult.setData(false);
         }
         return parserResult;
     }
 
     @Override
-    public ParserResult getCloumnsName(String key) {
-        ParserResult parserResult = new ParserResult();
+    public WebResult getCloumnsName(String key) {
+        WebResult parserResult = new WebResult();
         Map<String, Table> map = null;
         try {
             String publicKey=keyPairHolder.pubKeyToString((EdDSAPublicKey) keyPairHolder.getKeyPairFromString(key).getPublic());
@@ -87,19 +87,19 @@ public class BigchainDBServiceImp implements IService {
             e.printStackTrace();
             parserResult.setData(null);
             parserResult.setMessage("表名获取失败！！");
-            parserResult.setStatus(ParserResult.ERROR);
+            parserResult.setStatus(WebResult.ERROR);
             return parserResult;
         }
         List<Map> list = buildJstreeData(map);
         parserResult.setData(list);
         parserResult.setMessage("表名获取成功！！");
-        parserResult.setStatus(ParserResult.SUCCESS);
+        parserResult.setStatus(WebResult.SUCCESS);
         return parserResult;
     }
 
     @Override
-    public ParserResult getTableData(String key, String operation) {
-        ParserResult parserResult = new ParserResult();
+    public WebResult getTableData(String key, String operation) {
+        WebResult parserResult = new WebResult();
         Table table = new Table();
         table.setTableName(key);
         if (operation.equals("asset")) {
@@ -111,7 +111,7 @@ public class BigchainDBServiceImp implements IService {
             } else {
                 parserResult.setData(null);
                 parserResult.setMessage("查询表数据错误！！！");
-                parserResult.setStatus(ParserResult.ERROR);
+                parserResult.setStatus(WebResult.ERROR);
                 return parserResult;//TODO 错误
             }
         } else {
@@ -122,21 +122,21 @@ public class BigchainDBServiceImp implements IService {
             } else {
                 parserResult.setData(null);
                 parserResult.setMessage("查询表数据错误！！！");
-                parserResult.setStatus(ParserResult.ERROR);
+                parserResult.setStatus(WebResult.ERROR);
                 return parserResult;//TODO 错误
             }
         }
 
         Map map = buildjqGridData(table);
-        parserResult.setStatus(ParserResult.SUCCESS);
+        parserResult.setStatus(WebResult.SUCCESS);
         parserResult.setMessage("表：" + key + "  数据查询成功！！");
         parserResult.setData(map);
         return parserResult;
     }
 
     @Override
-    public ParserResult runBDQL(String BDQL) {
-        ParserResult parserResult = bdqlUtil.work(BDQL);
+    public WebResult runBDQL(String BDQL) {
+        WebResult parserResult = bdqlUtil.work(BDQL);
         if (parserResult.getMessage().equals("select")) {
             parserResult.setData(buildjqGridData((Table) parserResult.getData()));
         }

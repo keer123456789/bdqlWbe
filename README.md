@@ -52,7 +52,7 @@ UPDATE table_name SET column1=value1,column2=value2,... WHERE ID = assetID;
 
 ```
 ### 3.5 使用select 语句查询
-**注意**：
+**注意**
 - 不支持多表查询
 - 支持`*`查询
 - where 支持`<,<=,>,>=`表达式，其他表达式还不支持。

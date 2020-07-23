@@ -8,7 +8,7 @@ import com.keer.bdql.Bigchaindb.BigchainDBRunner;
 import com.keer.bdql.Bigchaindb.BigchainDBUtil;
 import com.keer.bdql.Domain.BigchainDBData;
 import com.keer.bdql.Domain.MetaData;
-import com.keer.bdql.Domain.ParserResult;
+import com.keer.bdql.Domain.WebResult;
 import com.keer.bdql.Domain.Table;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
@@ -52,9 +52,9 @@ public class BDQLParser {
      * @param BDQL
      * @param sort
      */
-    public ParserResult BDQLParser(String BDQL, int sort) {
+    public WebResult BDQLParser(String BDQL, int sort) {
         startTime=System.currentTimeMillis();
-        ParserResult result = new ParserResult();
+        WebResult result = new WebResult();
         logger.info("开始解析BDQL：" + BDQL + "，##########################");
         switch (sort) {
             case BDQLUtil.ONE:
@@ -76,8 +76,8 @@ public class BDQLParser {
      * @param BDQL
      * @return
      */
-    public   ParserResult BDQLParserONE(String BDQL) {
-        ParserResult result = new ParserResult();
+    public WebResult BDQLParserONE(String BDQL) {
+        WebResult result = new WebResult();
         Statement statement = null;
         try {
             statement = CCJSqlParserUtil.parse(BDQL);
@@ -92,7 +92,7 @@ public class BDQLParser {
         } else if (statement instanceof Update) {
             return updateParser((Update) statement);
         }
-        result.setStatus(ParserResult.ERROR);
+        result.setStatus(WebResult.ERROR);
         result.setMessage("此种语法还未推出！！！");
         result.setData(null);
         return result;
@@ -104,8 +104,8 @@ public class BDQLParser {
      * @param BDQL
      * @return
      */
-    public   ParserResult BDQLParserTWO(String BDQL) {
-        ParserResult result = new ParserResult();
+    public WebResult BDQLParserTWO(String BDQL) {
+        WebResult result = new WebResult();
         //TODO ParserTwo BDQL
         return result;
     }
@@ -116,11 +116,11 @@ public class BDQLParser {
      *
      * @param select Select
      */
-    private   ParserResult selectParser(Select select) {
+    private WebResult selectParser(Select select) {
         long timeStart=0;
         long timeEnd=0;
 
-        ParserResult result = new ParserResult();
+        WebResult result = new WebResult();
         Table table = new Table();
 
         PlainSelect selectBody = (PlainSelect) select.getSelectBody();
@@ -135,7 +135,7 @@ public class BDQLParser {
 
         if (tableNames.size() != 1) {
             logger.warn("多表查询功能还未推出！！！！");
-            result.setStatus(ParserResult.ERROR);
+            result.setStatus(WebResult.ERROR);
             result.setMessage("多表查询功能还未推出！！！！");
             result.setData(null);
             return result;
@@ -198,7 +198,7 @@ public class BDQLParser {
                 }
             }
 
-            result.setStatus(ParserResult.SUCCESS);
+            result.setStatus(WebResult.SUCCESS);
             result.setData(table);
             result.setMessage("select");
 //            result.setMessage(""+((endTime-startTime)+(timeEnd-timeStart)));
@@ -393,8 +393,8 @@ public class BDQLParser {
      *
      * @param insert Insert
      */
-    private   ParserResult insertParser(Insert insert) {
-        ParserResult result = new ParserResult();
+    private WebResult insertParser(Insert insert) {
+        WebResult result = new WebResult();
         //表名
         String tableName = insert.getTable().getName();
         //字段名
@@ -416,7 +416,7 @@ public class BDQLParser {
             result.setMessage("插入操作失败！！！！！");
             e.printStackTrace();
         }
-        result.setStatus(ParserResult.SUCCESS);
+        result.setStatus(WebResult.SUCCESS);
         result.setMessage("insert");
         result.setData(id);
         return result;
@@ -427,8 +427,8 @@ public class BDQLParser {
      *
      * @param update Update
      */
-    private   ParserResult updateParser(Update update) {
-        ParserResult result = new ParserResult();
+    private WebResult updateParser(Update update) {
+        WebResult result = new WebResult();
         //获得where后的资产ID数据
         EqualsTo expression = (EqualsTo) update.getWhere();
         String ID = expression.getLeftExpression().toString();
@@ -438,7 +438,7 @@ public class BDQLParser {
         if (!ID.equals("ID")) {
             logger.error("BDQL语法错误：where 只能使用ID=————，请检查书写和大小写");
             result.setMessage("BDQL语法错误：where 只能使用ID=————，请检查书写和大小写");
-            result.setStatus(ParserResult.ERROR);
+            result.setStatus(WebResult.ERROR);
             result.setData(null);
             return result;
         }
@@ -458,7 +458,7 @@ public class BDQLParser {
             id = bigchainDBUtil.transferToSelf(data, values);
         } catch (Exception e) {
             logger.error("更新数据失败！！！！！！！");
-            result.setStatus(ParserResult.ERROR);
+            result.setStatus(WebResult.ERROR);
             result.setData(null);
             result.setMessage("更新数据失败！！！！！！！");
             return result;
@@ -472,7 +472,7 @@ public class BDQLParser {
 //        } else {
 //            //TODO id不为null的时候，检查
 //        }
-        result.setStatus(ParserResult.SUCCESS);
+        result.setStatus(WebResult.SUCCESS);
         result.setMessage("更新数据成功！！！");
         result.setData(id);
 
@@ -488,8 +488,8 @@ public class BDQLParser {
      * @param BDQL
      * @return
      */
-    private   ParserResult insertAndUpdateParser(String BDQL) {
-        ParserResult result = new ParserResult();
+    private WebResult insertAndUpdateParser(String BDQL) {
+        WebResult result = new WebResult();
         //TODO
         return result;
     }

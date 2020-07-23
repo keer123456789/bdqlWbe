@@ -4,7 +4,7 @@ import com.bigchaindb.model.Transaction;
 import com.bigchaindb.model.Transactions;
 import com.google.gson.internal.LinkedTreeMap;
 import com.keer.bdql.Bigchaindb.BigchainDBUtil;
-import com.keer.bdql.Domain.ParserResult;
+import com.keer.bdql.Domain.WebResult;
 import com.keer.bdql.Domain.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,8 +94,8 @@ public class BDQLUtil {
      * @param sql
      * @return
      */
-    public ParserResult work(String sql) {
-        ParserResult result = new ParserResult();
+    public WebResult work(String sql) {
+        WebResult result = new WebResult();
         int sort = getSort(lowercaseToUpperCase(sql));
         return bdqlParser.BDQLParser(sql, sort);
     }
