@@ -1,16 +1,22 @@
-package com.keer.bdql.Domain.mongo;
+package com.keer.bdql.pojo;
 
-import java.io.Serializable;
 import java.util.Map;
 
 /**
- * mongodb中 在asset和metadata数据集中存储的对象
+ * 表结构使用kv结构的存储
  */
-public class TableData implements Serializable {
+public class BigchainDBData {
+    //表名
     private String tableName;
+    //表中数据
     private Map tableData;
 
-    public TableData() {
+    public BigchainDBData() {
+    }
+
+    public BigchainDBData(String tableName, Map tableData) {
+        this.tableName = tableName;
+        this.tableData = tableData;
     }
 
     public String getTableName() {

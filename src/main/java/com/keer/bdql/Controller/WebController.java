@@ -9,21 +9,23 @@ import com.keer.bdql.Bigchaindb.BigChainDBUtilByMongo;
 import com.keer.bdql.Bigchaindb.BigchainDBRunner;
 import com.keer.bdql.Bigchaindb.BigchainDBUtil;
 import com.keer.bdql.Bigchaindb.KeyPairHolder;
-import com.keer.bdql.Domain.WebResult;
-import com.keer.bdql.Domain.mongo.Transactions;
+import com.keer.bdql.pojo.WebResult;
 import com.keer.bdql.Service.Implement.WebServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ * v1.0版本使用，废弃但是保留
+ */
 @RestController
 public class WebController {
     private static Logger logger = LoggerFactory.getLogger(WebController.class);
@@ -90,9 +92,67 @@ public class WebController {
     }
 
     @GetMapping("/test")
-    public Object test() {
-        String pubkey=keyPairHolder.pubKeyToString(keyPairHolder.getPublic());
-        return bigChainDBUtilByMongo.queryAsset(pubkey);
+    public Map test() {
+        String[] authors = {"keer", "董卿", "撒贝宁", "白岩松", "康辉", "李瑞英"};
+        List datas = new ArrayList();
+        for (int i = 1; i <= 20; i++) {
+            Map data = new HashMap();
+            data.put("id", i);
+            data.put("time", System.currentTimeMillis());
+            data.put("title", "中央新闻");
+            data.put("author", authors[i % 6]);
+            data.put("pindao", "CCTV" + i % 13);
+            datas.add(data);
+        }
+        List field = new ArrayList();
+        field.add("id");
+        field.add("time");
+        field.add("title");
+        field.add("author");
+        field.add("pindao");
+
+        Map data=new HashMap();
+        data.put("field", field);
+        data.put("data", datas);
+        data.put("total",20);
+
+
+        Map res = new HashMap();
+        res.put("code",20000);
+        res.put("data", data);
+
+        System.out.println(res.toString());
+        return res;
+    }
+
+
+    @GetMapping("/test1")
+    public Map test1() {
+        String[] operation = {"CREATE", "TRANSFER"};
+        String[] collection = {"people", "school","family"};
+        List datas = new ArrayList();
+        for (int i = 10; i > 0; i--) {
+            Map data = new HashMap();
+            data.put("blockHeight", i);
+            data.put("chainHash", System.currentTimeMillis()-((30-i)*10));
+            data.put("txHash", System.currentTimeMillis()-((30-i)*100));
+            data.put("operation", operation[i % 2]);
+            data.put("collection", collection[i%3]);
+            datas.add(data);
+        }
+
+
+        Map data=new HashMap();
+        data.put("data", datas);
+        data.put("total",30);
+
+
+        Map res = new HashMap();
+        res.put("code",20000);
+        res.put("data", data);
+
+        System.out.println(res.toString());
+        return res;
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {

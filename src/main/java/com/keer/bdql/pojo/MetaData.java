@@ -1,4 +1,4 @@
-package com.keer.bdql.Domain;
+package com.keer.bdql.pojo;
 
 import com.google.gson.annotations.SerializedName;
 

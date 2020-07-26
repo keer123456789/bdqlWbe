@@ -1,4 +1,4 @@
-package com.keer.bdql.Domain.mongo;
+package com.keer.bdql.pojo.mongoDao;
 
 /**
  * Transaction数据集中的Operation中的两种方法

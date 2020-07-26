@@ -1,5 +1,6 @@
-package com.keer.bdql.Domain.mongo;
+package com.keer.bdql.pojo.mongoDao;
 
+import com.keer.bdql.pojo.Table;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -7,21 +8,16 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.io.Serializable;
 
 /**
- * mongodb中 Asset数据集的对象
+ * 附加数据集
  */
-@Document(collection = "assets")
-public class Assets implements Serializable {
+@Document(collection = "metadata")
+public class Metadata implements Serializable {
     @Id
     private String _id;
-
-    @Field(value = "data")
-    private TableData data;
-
     @Field(value = "id")
     private String id;
-
-    public Assets() {
-    }
+    @Field(value = "metadata")
+    private Table metadata;
 
     public String get_id() {
         return _id;
@@ -31,19 +27,19 @@ public class Assets implements Serializable {
         this._id = _id;
     }
 
-    public TableData getData() {
-        return data;
-    }
-
-    public void setData(TableData data) {
-        this.data = data;
-    }
-
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Table getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(Table metadata) {
+        this.metadata = metadata;
     }
 }

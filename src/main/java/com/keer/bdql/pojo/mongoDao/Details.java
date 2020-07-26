@@ -1,4 +1,4 @@
-package com.keer.bdql.Domain.mongo;
+package com.keer.bdql.pojo.mongoDao;
 
 import java.io.Serializable;
 /**

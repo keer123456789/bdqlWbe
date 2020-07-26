@@ -1,4 +1,4 @@
-package com.keer.bdql.Domain;
+package com.keer.bdql.pojo;
 
 /**
  * controller 返回值

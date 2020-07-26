@@ -1,7 +1,7 @@
 package com.keer.bdql.Service;
 
 
-import com.keer.bdql.Domain.WebResult;
+import com.keer.bdql.pojo.WebResult;
 
 import java.io.IOException;
 

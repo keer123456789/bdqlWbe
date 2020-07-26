@@ -1,7 +1,7 @@
 package com.keer.bdql.Bigchaindb;
 
-import com.keer.bdql.Domain.mongo.Operation;
-import com.keer.bdql.Domain.mongo.Transactions;
+import com.keer.bdql.pojo.mongoDao.Operation;
+import com.keer.bdql.pojo.mongoDao.Transactions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -39,4 +39,7 @@ public class BigChainDBUtilByMongo {
          */
         return assets.stream().distinct().collect(Collectors.toList());
     }
+
+
+
 }
