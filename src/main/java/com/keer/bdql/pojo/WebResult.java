@@ -5,8 +5,11 @@ package com.keer.bdql.pojo;
  * @param <T>
  */
 public class WebResult<T> {
-    public static final int SUCCESS = 20000;
+    public static final int CODE_SUCCESS = 20000;
+    public static final int CODE_ERROR_MISSPARAM = 30001;
     public static final int ERROR = 1;
+    public static final String MSG_SUCCESS="success";
+    public static final String MSG_ERROR_MISSPARAM="缺失参数，请检查";
     private int code;
     private T data;
     private String message;

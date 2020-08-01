@@ -50,7 +50,7 @@ public class WebServiceImp implements WebService {
     public WebResult getKey(String key) {
         WebResult parserResult = new WebResult();
         if (keyPairHolder.SaveKeyPairToTXT(keyPairHolder.getKeyPairFromString(key))) {
-            parserResult.setCode(WebResult.SUCCESS);
+            parserResult.setCode(WebResult.CODE_SUCCESS);
             parserResult.setMessage("success");
             logger.info("设置数据密钥成功");
         } else {
@@ -66,7 +66,7 @@ public class WebServiceImp implements WebService {
         WebResult parserResult = new WebResult();
         if (bigchainDBRunner.StartConn(url)) {
             parserResult.setMessage("连接BigchainDB节点成功！！！");
-            parserResult.setCode(WebResult.SUCCESS);
+            parserResult.setCode(WebResult.CODE_SUCCESS);
             parserResult.setData(true);
         } else {
             parserResult.setMessage("连接BigchainDB节点失败成功！");
@@ -93,7 +93,7 @@ public class WebServiceImp implements WebService {
         List<Map> list = buildJstreeData(map);
         parserResult.setData(list);
         parserResult.setMessage("表名获取成功！！");
-        parserResult.setCode(WebResult.SUCCESS);
+        parserResult.setCode(WebResult.CODE_SUCCESS);
         return parserResult;
     }
 
@@ -128,7 +128,7 @@ public class WebServiceImp implements WebService {
         }
 
         Map map = buildjqGridData(table);
-        parserResult.setCode(WebResult.SUCCESS);
+        parserResult.setCode(WebResult.CODE_SUCCESS);
         parserResult.setMessage("表：" + key + "  数据查询成功！！");
         parserResult.setData(map);
         return parserResult;

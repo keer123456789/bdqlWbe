@@ -1,6 +1,7 @@
 package com.keer.bdql.Controller;
 
 import com.keer.bdql.Service.QueryService;
+import com.keer.bdql.dao.QueryDao;
 import com.keer.bdql.pojo.WebResult;
 import com.keer.bdql.pojo.vo.AddOneDataRequest;
 import com.keer.bdql.pojo.vo.QueryByOperationAndTableNameRequest;
@@ -15,20 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/query")
 public class QueryController {
-    private Logger logger= LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     QueryService queryService;
+
+    @Autowired
+    QueryDao queryDao;
 
     /**
      * 查询页面，获取BigChainDB中所有的表名（asset，metadata）
      * 返回结果
      * {
-     *     "code":20000,
-     *     "message":"success",
-     *     "data":{
-     *         "assetNames":["a","b",……],
-     *         "metaDataName":["a","b",……]
-     *     }
+     * "code":20000,
+     * "message":"success",
+     * "data":{
+     * "assetNames":["a","b",……],
+     * "metaDataName":["a","b",……]
+     * }
      * }
      *
      * @return
@@ -47,8 +51,17 @@ public class QueryController {
      * @return
      */
     @RequestMapping(value = "/queryByOperationAndTableName", method = RequestMethod.POST)
-    public WebResult queryByOperationAndTableName(@RequestBody QueryByOperationAndTableNameRequest request) {
-        return null;
+    public Object queryByOperationAndTableName(@RequestBody QueryByOperationAndTableNameRequest request) {
+        logger.info("接收到请求： /query/queryByOperationAndTableName, 接收参数"+request.toString());
+        if (request.getTableName() == null || request.getTableName().equals("") || request.getOperation() == null || request.getOperation().equals("")) {
+            WebResult webResult = new WebResult();
+            webResult.setCode(WebResult.CODE_ERROR_MISSPARAM);
+            webResult.setMessage(WebResult.MSG_ERROR_MISSPARAM);
+            logger.error("参数缺失，参数："+request.toString());
+            return webResult;
+        }
+
+        return queryService.queryByOperationAndTableName(request.getTableName(), request.getOperation(), request.getPageNum(), request.getPageSize());
     }
 
     /**

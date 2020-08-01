@@ -95,7 +95,7 @@ public class WebController {
     public Map test() {
         String[] authors = {"keer", "董卿", "撒贝宁", "白岩松", "康辉", "李瑞英"};
         List datas = new ArrayList();
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 10; i++) {
             Map data = new HashMap();
             data.put("id", i);
             data.put("time", System.currentTimeMillis());

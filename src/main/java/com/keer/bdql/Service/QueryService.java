@@ -10,4 +10,14 @@ public interface QueryService {
      * @return
      */
     WebResult getAllTable();
+
+    /**
+     * 分页获取相应表的数据
+     * @param tableName
+     * @param operation
+     * @param pageNum 从0计数
+     * @param pageSize
+     * @return
+     */
+    WebResult queryByOperationAndTableName(String tableName,String operation,Integer pageNum,Integer pageSize);
 }

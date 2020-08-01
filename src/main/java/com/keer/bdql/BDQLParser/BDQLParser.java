@@ -198,7 +198,7 @@ public class BDQLParser {
                 }
             }
 
-            result.setCode(WebResult.SUCCESS);
+            result.setCode(WebResult.CODE_SUCCESS);
             result.setData(table);
             result.setMessage("select");
 //            result.setMessage(""+((endTime-startTime)+(timeEnd-timeStart)));
@@ -416,7 +416,7 @@ public class BDQLParser {
             result.setMessage("插入操作失败！！！！！");
             e.printStackTrace();
         }
-        result.setCode(WebResult.SUCCESS);
+        result.setCode(WebResult.CODE_SUCCESS);
         result.setMessage("insert");
         result.setData(id);
         return result;
@@ -472,7 +472,7 @@ public class BDQLParser {
 //        } else {
 //            //TODO id不为null的时候，检查
 //        }
-        result.setCode(WebResult.SUCCESS);
+        result.setCode(WebResult.CODE_SUCCESS);
         result.setMessage("更新数据成功！！！");
         result.setData(id);
 

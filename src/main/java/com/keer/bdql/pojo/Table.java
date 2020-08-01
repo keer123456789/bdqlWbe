@@ -20,7 +20,11 @@ public class Table {
     private String type;
     private List<String> columnName;
     private List<Map> data;
-    private Map<String, String> rowData;
+
+    public Table() {
+        this.columnName = new ArrayList<>();
+        this.data = new ArrayList<>();
+    }
 
     public String getTableName() {
         return tableName;
@@ -155,7 +159,7 @@ public class Table {
         List<Map> data = new LinkedList<>();
         if (!(this.tableName.equals(null) && this.type.equals(null) && this.columnName.equals(null))) {
             for (MetaData metaData : metaDatas) {
-                Map map =  metaData.getMetadata();
+                Map map = metaData.getMetadata();
                 map = (Map) map.get("tableData");
                 Map map1 = new HashMap();
                 for (String name : this.columnName) {
@@ -180,7 +184,7 @@ public class Table {
         List<String> result = new ArrayList<String>();
         if (!(this.tableName.equals(null) && this.type.equals(null))) {
             for (MetaData metadata : metaDatas) {
-                Map map =  metadata.getMetadata();
+                Map map = metadata.getMetadata();
                 Map map1 = (JSONObject) map.get("tableData");
 
                 Set<String> keys = map1.keySet();
@@ -188,7 +192,7 @@ public class Table {
                     result.add(key);
                 }
                 result.add("TXID");
-                map1.put("TXID",metadata.getId());
+                map1.put("TXID", metadata.getId());
                 List<Map> list = new ArrayList<Map>();
                 list.add(map1);
                 if (this.data == null) {
@@ -206,6 +210,36 @@ public class Table {
             this.columnName = null;
         }
 
+    }
+
+    /**
+     * 通过mongodb查询数据，直接插入
+     *
+     * @param map
+     */
+    public void addTableData(Map map) {
+        this.data.add(map);
+    }
+
+    /**
+     * 通过mongodb查询数据中一条数据，设置列名
+     *
+     * @param map
+     */
+    public void setColumnName(Map map) {
+        this.columnName = new ArrayList<>(map.keySet());
+    }
+
+    /**
+     * 如果没有改字段，添加字段
+     * 有则跳过
+     *
+     * @param field
+     */
+    public void addColumn(String field) {
+        if (!this.columnName.contains(field)) {
+            this.columnName.add(field);
+        }
     }
 
 
@@ -279,44 +313,19 @@ public class Table {
         this.data = data;
     }
 
-
-    public Map<String, String> getRowData() {
-        return rowData;
-    }
-
-    public void setRowData(Map<String, String> rowData) {
-        this.rowData = rowData;
-
-    }
-
-    public void setRowData(Transaction transaction) {
-        LinkedTreeMap map = new LinkedTreeMap();
-        if (transaction.getOperation().equals("\"CREATE\"")) {
-            map = (LinkedTreeMap) transaction.getAsset().getData();
-            map = (LinkedTreeMap) map.get("tableData");
-        } else {
-            map = (LinkedTreeMap) transaction.getMetaData();
-            map = (LinkedTreeMap) map.get("tableData");
-        }
-        List<Map> list = new ArrayList<Map>();
-        list.add(map);
-        if (this.data == null) {
-            this.data = list;
-        } else {
-            list.addAll(this.data);
-            this.data = list;
-        }
-
-
-    }
-
     private static boolean isInteger(String str) {
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
     }
 
+    @Override
     public String toString() {
-        return "{tableName:" + tableName + ",type:" + type + ",columnName:" + columnName.toString() + ",data:" + data.toString() + "}";
+        return "Table{" +
+                "tableName='" + tableName + '\'' +
+                ", type='" + type + '\'' +
+                ", columnName=" + columnName +
+                ", data=" + data +
+                '}';
     }
 
     public static void main(String[] args) throws IOException {

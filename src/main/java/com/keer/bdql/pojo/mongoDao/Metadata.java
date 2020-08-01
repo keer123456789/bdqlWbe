@@ -17,7 +17,7 @@ public class Metadata implements Serializable {
     @Field(value = "id")
     private String id;
     @Field(value = "metadata")
-    private Table metadata;
+    private TableData metadata;
 
     public String get_id() {
         return _id;
@@ -35,11 +35,11 @@ public class Metadata implements Serializable {
         this.id = id;
     }
 
-    public Table getMetadata() {
+    public TableData getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(Table metadata) {
+    public void setMetadata(TableData metadata) {
         this.metadata = metadata;
     }
 }
