@@ -5,21 +5,21 @@ package com.keer.bdql.pojo;
  * @param <T>
  */
 public class WebResult<T> {
-    public static final int SUCCESS = 0;
+    public static final int SUCCESS = 20000;
     public static final int ERROR = 1;
-    private int status;
+    private int code;
     private T data;
     private String message;
 
     public WebResult() {
     }
 
-    public int getStatus() {
-        return status;
+    public int getCode() {
+        return code;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public T getData() {

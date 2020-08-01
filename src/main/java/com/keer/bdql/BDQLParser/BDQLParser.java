@@ -92,7 +92,7 @@ public class BDQLParser {
         } else if (statement instanceof Update) {
             return updateParser((Update) statement);
         }
-        result.setStatus(WebResult.ERROR);
+        result.setCode(WebResult.ERROR);
         result.setMessage("此种语法还未推出！！！");
         result.setData(null);
         return result;
@@ -135,7 +135,7 @@ public class BDQLParser {
 
         if (tableNames.size() != 1) {
             logger.warn("多表查询功能还未推出！！！！");
-            result.setStatus(WebResult.ERROR);
+            result.setCode(WebResult.ERROR);
             result.setMessage("多表查询功能还未推出！！！！");
             result.setData(null);
             return result;
@@ -198,7 +198,7 @@ public class BDQLParser {
                 }
             }
 
-            result.setStatus(WebResult.SUCCESS);
+            result.setCode(WebResult.SUCCESS);
             result.setData(table);
             result.setMessage("select");
 //            result.setMessage(""+((endTime-startTime)+(timeEnd-timeStart)));
@@ -416,7 +416,7 @@ public class BDQLParser {
             result.setMessage("插入操作失败！！！！！");
             e.printStackTrace();
         }
-        result.setStatus(WebResult.SUCCESS);
+        result.setCode(WebResult.SUCCESS);
         result.setMessage("insert");
         result.setData(id);
         return result;
@@ -438,7 +438,7 @@ public class BDQLParser {
         if (!ID.equals("ID")) {
             logger.error("BDQL语法错误：where 只能使用ID=————，请检查书写和大小写");
             result.setMessage("BDQL语法错误：where 只能使用ID=————，请检查书写和大小写");
-            result.setStatus(WebResult.ERROR);
+            result.setCode(WebResult.ERROR);
             result.setData(null);
             return result;
         }
@@ -458,7 +458,7 @@ public class BDQLParser {
             id = bigchainDBUtil.transferToSelf(data, values);
         } catch (Exception e) {
             logger.error("更新数据失败！！！！！！！");
-            result.setStatus(WebResult.ERROR);
+            result.setCode(WebResult.ERROR);
             result.setData(null);
             result.setMessage("更新数据失败！！！！！！！");
             return result;
@@ -472,7 +472,7 @@ public class BDQLParser {
 //        } else {
 //            //TODO id不为null的时候，检查
 //        }
-        result.setStatus(WebResult.SUCCESS);
+        result.setCode(WebResult.SUCCESS);
         result.setMessage("更新数据成功！！！");
         result.setData(id);
 
