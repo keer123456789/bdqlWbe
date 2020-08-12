@@ -17,9 +17,6 @@ import java.util.Map;
 
 @Component
 public class BDQLUtil {
-    public static final int ONE = 1;
-    public static final int TWO = 2;
-
 
     private static Logger logger = LoggerFactory.getLogger(BDQLUtil.class);
 
@@ -28,26 +25,7 @@ public class BDQLUtil {
 
     @Autowired
     BigchainDBUtil bigchainDBUtil;
-    /**
-     * 字符串小写转大写
-     *
-     * @param bdql
-     * @return
-     */
-    public  String lowercaseToUpperCase(String bdql) {
-        StringBuffer s = new StringBuffer();
-        char c[] = bdql.toCharArray();
-        for (int i = 0; i < bdql.length(); i++) {
 
-            if (c[i] >= 97 && c[i] <= 122) {
-                s.append((c[i] + "").toUpperCase());
-            } else {
-                s.append(c[i]);
-            }
-        }
-        logger.info("字符串：" + bdql + ",转换后：" + s);
-        return s.toString();
-    }
 
     /**
      * 去掉字符串的第一个和最后一个单引号
@@ -61,32 +39,6 @@ public class BDQLUtil {
         return s;
     }
 
-    /**
-     * 获得BDQL的查询类型，select，insert，update,update and insert
-     *
-     * @param BDQL
-     * @return 0, 1, 2
-     */
-    public  int getSort(String BDQL) {
-        int sum = BDQL.split(";").length;
-        if (sum == 1) {
-            return 1;
-
-        } else if (sum == 2) {
-            String[] ss = BDQL.split(";");
-            if (ss[0].indexOf("INSERT") != -1 && ss[1].indexOf("UPDATE") != -1) {
-                logger.info("BDQL语句：" + BDQL + ",类型：插入 更新");
-                return 2;
-            } else {
-                logger.error("BDQL语句：" + BDQL + ", 语法错误：请保证是 INSERT 和 UPDATE 连用！！！！");
-                return 0;
-            }
-        } else {
-            logger.error("BDQL语句：" + BDQL + "，语法不正确，请检查分号用法");
-            return 0;
-        }
-
-    }
 
     /**
      * 开始解析BDQL  不出意外的话这个函数是第一个使用
@@ -96,8 +48,13 @@ public class BDQLUtil {
      */
     public WebResult work(String sql) {
         WebResult result = new WebResult();
-        int sort = getSort(lowercaseToUpperCase(sql));
-        return bdqlParser.BDQLParser(sql, sort);
+        if(sql.split(";").length!=1){
+            result.setData(WebResult.BDQL_ERROR_GRAMMAR);
+            result.setMessage(WebResult.MSG_BDQL_ERROR_GRAMMAR+",不支持批量查询");
+            logger.error("BDQL语句："+sql+",目前不支持批量操作");
+            return result;
+        }
+        return bdqlParser.BDQLParser(sql.toUpperCase());
     }
 
 
@@ -154,12 +111,7 @@ public class BDQLUtil {
 
 
     public static void main(String[] args) throws IOException {
-//        BigchainDBRunner.StartConn();
-//        Map<String,Table>a=new HashMap<String, Table>();
-//        a=getAlltablesByPubKey(KeyPairHolder.pubKeyToString(KeyPairHolder.getPublic()));
-//        logger.info(String.valueOf(a.size()));
-
-        boolean[][] dp = new boolean[2][2];
-        logger.info(dp[0][0]+"");
+        String a="adfaDDD;";
+        System.out.println(a.toUpperCase());
     }
 }

@@ -44,40 +44,15 @@ public class BDQLParser {
     @Autowired
     BDQLUtil bdqlUtil;
 
-    long startTime=0;
-    long endTime=0;
     /**
      * 根据不同的类型的BDQL进行不同的解析,根据分号区分语句个数
      *
      * @param BDQL
-     * @param sort
      */
-    public WebResult BDQLParser(String BDQL, int sort) {
-        startTime=System.currentTimeMillis();
+    public WebResult BDQLParser(String BDQL) {
+
         WebResult result = new WebResult();
         logger.info("开始解析BDQL：" + BDQL + "，##########################");
-        switch (sort) {
-            case BDQLUtil.ONE:
-                result = BDQLParserONE(BDQL);
-                break;
-            case BDQLUtil.TWO:
-                result = BDQLParserTWO(BDQL);
-                break;
-            default:
-                //TODO
-                logger.info("BDQL语句：" + BDQL + ",此类型语法尚未完善");
-        }
-        return result;
-    }
-
-    /**
-     * 区分不同的语法 select insert，update
-     *
-     * @param BDQL
-     * @return
-     */
-    public WebResult BDQLParserONE(String BDQL) {
-        WebResult result = new WebResult();
         Statement statement = null;
         try {
             statement = CCJSqlParserUtil.parse(BDQL);
@@ -94,19 +69,7 @@ public class BDQLParser {
         }
         result.setCode(WebResult.ERROR);
         result.setMessage("此种语法还未推出！！！");
-        result.setData(null);
-        return result;
-    }
-
-    /**
-     * 分号后有两个语句，现在只支持insert和update在创建资产的时候应用
-     *
-     * @param BDQL
-     * @return
-     */
-    public WebResult BDQLParserTWO(String BDQL) {
-        WebResult result = new WebResult();
-        //TODO ParserTwo BDQL
+        logger.error("此种语法还未推出！！！");
         return result;
     }
 
@@ -117,33 +80,31 @@ public class BDQLParser {
      * @param select Select
      */
     private WebResult selectParser(Select select) {
-        long timeStart=0;
-        long timeEnd=0;
-
         WebResult result = new WebResult();
         Table table = new Table();
-
+        //获得where 条件
         PlainSelect selectBody = (PlainSelect) select.getSelectBody();
-
-
         Expression expression = selectBody.getWhere();
         //获得表名
         TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
         List<String> tableNames = tablesNamesFinder.getTableList(select);
 
-        endTime=System.currentTimeMillis();
-
+        /**
+         * 如果是多表查询，直接返回不支持
+         */
         if (tableNames.size() != 1) {
             logger.warn("多表查询功能还未推出！！！！");
             result.setCode(WebResult.ERROR);
             result.setMessage("多表查询功能还未推出！！！！");
-            result.setData(null);
             return result;
         } else {
             table.setTableName(tableNames.get(0));
             //获得列名
             ArrayList<String> columnNames = (ArrayList<String>) getColumnNames(selectBody);
-            if (expression instanceof EqualsTo && ((EqualsTo) expression).getLeftExpression().toString().equals("ID")) {//存在交易ID
+            /**
+             * 目前如果where中有关键字 ID 表示直接交易id 的这笔交易
+             */
+            if (expression instanceof EqualsTo && ((EqualsTo) expression).getLeftExpression().toString().equals("ID")) {
                 String TXID = ((EqualsTo) expression).getRightExpression().toString();
                 Transaction transaction = bigchainDBUtil.getTransactionByTXID(TXID);
                 if (transaction.getOperation().equals("CREATE")) {
@@ -162,21 +123,20 @@ public class BDQLParser {
                 }
 
             } else {
+                /**
+                 * 支持*查询
+                 */
                 if (columnNames.size() == 1 && columnNames.get(0).equals("*")) {
                     if (bigchainDBUtil.getAssetByKey(table.getTableName()).size() == 0) {
-                        timeStart=System.currentTimeMillis();
                         List<MetaData> metaDatas = bigchainDBUtil.getMetaDatasByKey(table.getTableName());
                         table.setType("TRANSFER");
                         List<MetaData> newMetadatas=selectMetadata(metaDatas,expression);
                         table.setTableDataWithCloumnName(newMetadatas);
-                        timeEnd=System.currentTimeMillis();
                     } else {
-//                        timeStart=System.currentTimeMillis();
                         Assets assets = bigchainDBUtil.getAssetByKey(table.getTableName());
                         table.setType("CREATE");
                         Assets newAssets=selectAssets(assets,expression);
                         table.setTableDataWithColumnName(newAssets);
-//                        timeEnd=System.currentTimeMillis();
                     }
 
                 } else {
@@ -201,8 +161,6 @@ public class BDQLParser {
             result.setCode(WebResult.CODE_SUCCESS);
             result.setData(table);
             result.setMessage("select");
-//            result.setMessage(""+((endTime-startTime)+(timeEnd-timeStart)));
-//            result.setMessage(""+((endTime-startTime)+(timeEnd-timeStart))+","+(timeEnd-timeStart));
             return result;
         }
 

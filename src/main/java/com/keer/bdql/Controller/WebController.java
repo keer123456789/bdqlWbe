@@ -2,28 +2,42 @@ package com.keer.bdql.Controller;
 
 
 import com.bigchaindb.api.OutputsApi;
+import com.bigchaindb.builders.BigchainDbConfigBuilder;
+import com.bigchaindb.constants.Operations;
 import com.bigchaindb.model.Output;
 import com.bigchaindb.model.Outputs;
+import com.bigchaindb.util.KeyPairUtils;
 import com.keer.bdql.BDQLParser.BDQLUtil;
 import com.keer.bdql.Bigchaindb.BigChainDBUtilByMongo;
 import com.keer.bdql.Bigchaindb.BigchainDBRunner;
 import com.keer.bdql.Bigchaindb.BigchainDBUtil;
 import com.keer.bdql.Bigchaindb.KeyPairHolder;
+import com.keer.bdql.Util.BigChainDbUtil;
+import com.keer.bdql.pojo.BigchainDBData;
 import com.keer.bdql.pojo.WebResult;
 import com.keer.bdql.Service.Implement.WebServiceImp;
+import com.keer.bdql.pojo.mongoDao.Asset;
+import com.keer.bdql.pojo.mongoDao.Assets;
+import net.i2p.crypto.eddsa.EdDSAPrivateKey;
+import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- *
  * v1.0版本使用，废弃但是保留
  */
 @RestController
@@ -37,6 +51,14 @@ public class WebController {
 
     @Autowired
     KeyPairHolder keyPairHolder;
+
+    @Autowired
+    BigChainDbUtil bigChainDbUtil;
+
+    @Autowired
+    MongoTemplate mongoTemplate;
+
+
 
     /**
      * 获取秘钥
@@ -111,44 +133,61 @@ public class WebController {
         field.add("author");
         field.add("pindao");
 
-        Map data=new HashMap();
+        Map data = new HashMap();
         data.put("field", field);
         data.put("data", datas);
-        data.put("total",20);
+        data.put("total", 20);
 
 
         Map res = new HashMap();
-        res.put("code",20000);
+        res.put("code", 20000);
         res.put("data", data);
 
         System.out.println(res.toString());
         return res;
     }
 
+    @GetMapping("/test2")
+    public Object test2() {
+        List<String> fields=new ArrayList<>();
+        fields.add("age");
+        fields.add("name");
+        Query query = new Query();
+        query.addCriteria(Criteria.where("data.tableName").is("student"));
+
+//        query.addCriteria(Criteria.where("id").is(id));
+
+        if (fields!=null||fields.size() > 0) {
+            for (String field : fields) {
+                query.fields().include("data.tableData."+field);
+            }
+        }
+        return mongoTemplate.find(query, Asset.class);
+    }
 
     @GetMapping("/test1")
     public Map test1() {
         String[] operation = {"CREATE", "TRANSFER"};
-        String[] collection = {"people", "school","family"};
+        String[] collection = {"people", "school", "family"};
         List datas = new ArrayList();
         for (int i = 10; i > 0; i--) {
             Map data = new HashMap();
             data.put("blockHeight", i);
-            data.put("chainHash", System.currentTimeMillis()-((30-i)*10));
-            data.put("txHash", System.currentTimeMillis()-((30-i)*100));
+            data.put("chainHash", System.currentTimeMillis() - ((30 - i) * 10));
+            data.put("txHash", System.currentTimeMillis() - ((30 - i) * 100));
             data.put("operation", operation[i % 2]);
-            data.put("collection", collection[i%3]);
+            data.put("collection", collection[i % 3]);
             datas.add(data);
         }
 
 
-        Map data=new HashMap();
+        Map data = new HashMap();
         data.put("data", datas);
-        data.put("total",30);
+        data.put("total", 30);
 
 
         Map res = new HashMap();
-        res.put("code",20000);
+        res.put("code", 20000);
         res.put("data", data);
 
         System.out.println(res.toString());

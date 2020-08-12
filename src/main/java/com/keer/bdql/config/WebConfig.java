@@ -1,4 +1,4 @@
-package com.keer.bdql;
+package com.keer.bdql.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

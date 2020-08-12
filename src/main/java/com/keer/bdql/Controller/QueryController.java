@@ -5,6 +5,9 @@ import com.keer.bdql.dao.QueryDao;
 import com.keer.bdql.pojo.WebResult;
 import com.keer.bdql.pojo.vo.AddOneDataRequest;
 import com.keer.bdql.pojo.vo.QueryByOperationAndTableNameRequest;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/query")
+@Api(tags = "query page api")
 public class QueryController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
@@ -38,6 +42,7 @@ public class QueryController {
      * @return
      */
     @RequestMapping(value = "/getAllTable", method = RequestMethod.GET)
+    @ApiOperation(value = "query tables", notes = "查询BigChainDB中的表名")
     public WebResult getAllTable() {
         logger.info("接收到请求： /query/getAllTable, GET");
         return queryService.getAllTable();
@@ -51,6 +56,8 @@ public class QueryController {
      * @return
      */
     @RequestMapping(value = "/queryByOperationAndTableName", method = RequestMethod.POST)
+    @ApiOperation(value = "query data for page", notes = "分页查询")
+    @ApiImplicitParam(name = "queryInfo", value = "查询信息", required = true, dataType = "QueryByOperationAndTableNameRequest")
     public Object queryByOperationAndTableName(@RequestBody QueryByOperationAndTableNameRequest request) {
         logger.info("接收到请求： /query/queryByOperationAndTableName, 接收参数"+request.toString());
         if (request.getTableName() == null || request.getTableName().equals("") || request.getOperation() == null || request.getOperation().equals("")) {
